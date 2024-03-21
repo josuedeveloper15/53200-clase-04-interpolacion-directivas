@@ -7,7 +7,7 @@
 > -->
 <p
   [ngClass]="{
-    sucess: !hasError,
+    success: !hasError,
     error: hasError
   }"
   [ngStyle]="{
@@ -23,3 +23,97 @@
 <br />
 
 <button [disabled]="isDisabled" (click)="alternarError()">Click me!</button>
+
+<hr />
+
+<h2>Ciclos</h2>
+
+<ul>
+  <li *ngFor="let student of example; let i = index">
+    {{ i }} - {{ student.nombre }} -
+    {{ student.aprobado ? "APROBADO" : "DESAPROBADO" }}
+  </li>
+</ul>
+
+<!-- EN ANGULAR 17, OPCIONALMENTE SE AGREGO ESTA SINTAX -->
+<ul>
+  @for(student of students; track $index) {
+  <li>{{ $index }} - {{ student }}</li>
+  }
+</ul>
+
+<hr />
+
+<h2>Condicionales</h2>
+
+<button (click)="mostrarListado = !mostrarListado">Ver Listado</button>
+
+<ul *ngIf="mostrarListado">
+  @for(student of students; track $index) {
+  <li>{{ $index }} - {{ student }}</li>
+  }
+</ul>
+
+<!-- EN ANGULAR 17, OPCIONALMENTE SE AGREGO ESTA SINTAX -->
+@if(mostrarListado) {
+<ul>
+  @for(student of students; track $index) {
+  <li>{{ $index }} - {{ student }}</li>
+  }
+</ul>
+}
+
+<hr />
+
+<h2>Switch</h2>
+
+<select (change)="onSelectChange($event)">
+  <option value="en-camino">en-camino</option>
+  <option value="entregado">entregado</option>
+  <option value="en-preparacion">en-preparacion</option>
+</select>
+
+<div [ngSwitch]="status">
+  <p *ngSwitchCase="'en-camino'">Su paquete esta en camino</p>
+  <p *ngSwitchCase="'entregado'">Su paquete fue entregado</p>
+  <p *ngSwitchCase="'en-preparacion'">Su paquete esta en preparacion</p>
+  <p *ngSwitchDefault>ERROR: El estado es desconocido</p>
+</div>
+
+<!-- EN ANGULAR 17, OPCIONALMENTE SE AGREGO ESTA SINTAX -->
+@switch (status) { @case ('en-camino') {
+<p>Su paquete esta en camino</p>
+} @case ("entregado") {
+<p>Su paquete fue entregado</p>
+} @case ("en-preparacion") {
+<p>Su paquete esta en preparacion</p>
+} @default {
+<p>ERROR: El estado es desconocido</p>
+} }
+
+<hr />
+
+<h2>Tipos de enlazamiento (binding)</h2>
+
+<p>enlazamiento de entrada: []</p>
+<p>enlazamiento de salida: ()</p>
+<p>enlazamiento en doble sentido: [()]</p>
+
+<hr />
+
+<h2>Pipes</h2>
+
+<h4>date</h4>
+<p>{{ myBirthday | date : "fullDate" }}</p>
+
+<h4>uppercase/lowercase</h4>
+
+<p>
+  {{ "Lorem ipsum dolor, sit amet consectetur adipisicing elit." | uppercase }}
+</p>
+
+<p>
+  {{ "Lorem ipsum dolor, sit amet consectetur adipisicing elit." | lowercase }}
+</p>
+
+<p>{{ 599999 | currency }}</p>
